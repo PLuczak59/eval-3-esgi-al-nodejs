@@ -4,8 +4,9 @@ exports.create = async(req, res) => {
     try{
         let userId = req.token.id;
         let message = {
-            ...req.body,
-            authorId: userId
+            content: req.body.content,
+            authorId: userId,
+            picture: req.file ? req.file.filename : null
         }
 
         message = await Message.create(message);
@@ -27,7 +28,10 @@ exports.update = async(req, res) => {
             return res.status(403).json({message: "Vous ne pouvez pas modifier ce message."});
         }
 
-        message.update(req.body.message);
+        message.update({
+            content: req.body.content ? req.body.content : message.content,
+            picture: req.file ? req.file.filename : message.picture 
+        });
         res.status(200).json(message);
     } catch(error){
         res.status(500).json(error.message);
