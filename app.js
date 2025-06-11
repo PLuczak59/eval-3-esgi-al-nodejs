@@ -3,11 +3,13 @@ const authRoute =require("./route/auth.route.js");
 const userRoute =require("./route/user.route.js");
 const {connect} = require('./framework/connexion.js');
 const sync = require('./framework/sync.js');
+const dataset = require('./framework/dataset.js');
 const app = express();
 
 const database = async () => {
     await connect();
     await sync();
+    await dataset();
 }
 database();
 
