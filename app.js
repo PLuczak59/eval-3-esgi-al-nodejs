@@ -8,7 +8,6 @@ const app = express();
 const database = async () => {
     await connect();
     await sync();
-    await dataset();
 }
 database();
 
